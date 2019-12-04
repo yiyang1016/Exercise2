@@ -11,8 +11,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    //lateinit var bmiImage : imageViewProfile
-
     @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,14 +19,15 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.buttonCalculate).setOnClickListener {
             BMI()
         }
-        //bmiImage = findViewById(R.drawable.under)
+        findViewById<Button>(R.id.buttonReset).setOnClickListener {
+            Reset()
+        }
     }
         private fun BMI(){
             val weight = findViewById<EditText>(R.id.editTextWeight)
             val height = findViewById<EditText>(R.id.editTextHeight)
 
             val bmi = findViewById<TextView>(R.id.textViewBMI)
-            //val type = findViewById<TextView>(R.id.type)
 
             val num1: Float = weight.text.toString().toFloat()
             val num2: Float = height.text.toString().toFloat()
@@ -37,19 +36,24 @@ class MainActivity : AppCompatActivity() {
             val total3: Float = total1*total1
             val total2: Float = num1/total3
 
-            bmi.setText(total2.toString())
+            bmi.setText("BMI :" + total2.toString())
 
-            if(total2<18.5){
-                //type.setText("Underweight")
+            if(total2<18.5)
                 imageViewProfile.setImageResource(R.drawable.under)
-            }else if(total2 > 18.5 && total2 < 24.9){
-                //type.setText("Normal")
+            else if(total2 > 18.5 && total2 < 24.9)
                 imageViewProfile.setImageResource(R.drawable.normal)
-            }else if(total2>=25)
-                //type.setText("overweight")
+            else if(total2>=25)
                 imageViewProfile.setImageResource(R.drawable.over)
+        }
+        private fun Reset(){
+            val weight = findViewById<EditText>(R.id.editTextWeight)
+            val height = findViewById<EditText>(R.id.editTextHeight)
 
-
+            val bmi = findViewById<TextView>(R.id.textViewBMI)
+            weight.setText("")
+            height.setText("")
+            imageViewProfile.setImageResource(R.drawable.empty)
+            bmi.setText("BMI :")
         }
     }
 
